@@ -14,8 +14,8 @@ public class Menu extends ArrayList<String> implements I_Menu {
     }
 
     @Override
-    public void addItem(String s) {
-        menuList.add(s);
+    public void addItem(String content) {
+        menuList.add(content);
     }
 
     @Override
