@@ -18,7 +18,6 @@ public class List extends ArrayList<Account> implements I_List {
 
 
     // Declare
-    ArrayList<Account> list = new ArrayList<Account>();
     private boolean permission = false;
     private int activeAccountIndex = 0;
 
@@ -44,11 +43,11 @@ public class List extends ArrayList<Account> implements I_List {
     @Override
     public boolean checkExistId(String accountId) {
         boolean check = true;
-        if (list.isEmpty()) {
+        if (this.isEmpty()) {
             return true;
         } else {
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getAccountId().equals(accountId)) {
+            for (int i = 0; i < this.size(); i++) {
+                if (this.get(i).getAccountId().equals(accountId)) {
                     System.out.println("-> This ID has already been used!");
                     return !check;
                 }
@@ -60,11 +59,11 @@ public class List extends ArrayList<Account> implements I_List {
     @Override
     public boolean checkExistName(String accountName) {
         boolean check = true;
-        if (list.isEmpty()) {
+        if (this.isEmpty()) {
             return true;
         } else {
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getAccountName().equalsIgnoreCase(accountName)) {
+            for (int i = 0; i < this.size(); i++) {
+                if (this.get(i).getAccountName().equalsIgnoreCase(accountName)) {
                     System.out.println("-> This name has already been used!");
                     return !check;
                 }
@@ -77,7 +76,7 @@ public class List extends ArrayList<Account> implements I_List {
     public void createAccount() {
         setPermission(false);
         System.out.println("-> Create new account");
-        list.add(inputAccountData());
+        this.add(inputAccountData());
         System.out.println("-> Account created successfully!");
     }
 
@@ -110,8 +109,8 @@ public class List extends ArrayList<Account> implements I_List {
         boolean isExist = false;
         String accountId, password;
         accountId = Utils.getStringRegex("Enter account ID: ", ID_FORMAT, "-> Invalid ID format, valid ID format is <ACC*** with * is a number>");
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getAccountId().contains(accountId)) {
+        for (int i = 0; i < this.size(); i++) {
+            if (this.get(i).getAccountId().contains(accountId)) {
                 setActiveAccountIndex(i);
                 isExist = true;
             }
@@ -121,8 +120,8 @@ public class List extends ArrayList<Account> implements I_List {
         }
         if (isExist) {
             password = Utils.getString("Enter password: ");
-            if (password.equals(list.get(activeAccountIndex).getPassword())) {
-                System.out.println("-> WELCOME, " + list.get(activeAccountIndex).getAccountName() + "!");
+            if (password.equals(this.get(activeAccountIndex).getPassword())) {
+                System.out.println("-> WELCOME, " + this.get(activeAccountIndex).getAccountName() + "!");
                 setPermission(true);
             } else {
                 System.out.println("-> Wrong password!");
@@ -135,15 +134,15 @@ public class List extends ArrayList<Account> implements I_List {
         if (!permission) {
             System.out.println("-> Sorry! You are not allowed to access this function");
         } else {
-            System.out.println("-> Your current balance: $" + list.get(activeAccountIndex).getMoney());
+            System.out.println("-> Your current balance: $" + this.get(activeAccountIndex).getMoney());
             int withdrawMoney = Utils.getInt("Enter the money you want to withdraw: $");
-            if (withdrawMoney > list.get(activeAccountIndex).getMoney()) {
+            if (withdrawMoney > this.get(activeAccountIndex).getMoney()) {
                 System.out.println("-> Sorry! you don't have enough money to withdraw");
             } else if (withdrawMoney <= 0) {
                 System.out.println("-> Withdraw money must be greater than 0$");
             } else {
-                list.get(activeAccountIndex).setMoney(list.get(activeAccountIndex).getMoney() - withdrawMoney);
-                System.out.println("-> Withdraw succesfully! Your new current balance: $" + list.get(activeAccountIndex).getMoney());
+                this.get(activeAccountIndex).setMoney(this.get(activeAccountIndex).getMoney() - withdrawMoney);
+                System.out.println("-> Withdraw succesfully! Your new current balance: $" + this.get(activeAccountIndex).getMoney());
             }
         }
     }
@@ -153,7 +152,7 @@ public class List extends ArrayList<Account> implements I_List {
         if (!permission) {
             System.out.println("-> Sorry! You are not allowed to access this function");
         } else {
-            System.out.println("-> Your current balance: $" + list.get(activeAccountIndex).getMoney());
+            System.out.println("-> Your current balance: $" + this.get(activeAccountIndex).getMoney());
             int depositMoney = Utils.getInt("Enter the money you want to deposit: $");
             if (depositMoney <= 0) {
                 System.out.println("-> Deposit money must be greater than $0");
@@ -167,8 +166,8 @@ public class List extends ArrayList<Account> implements I_List {
             int choice = Utils.getInt("Enter your choice <1 or 2>: ", 1, 2);
             switch (choice) {
                 case 1:
-                    list.get(activeAccountIndex).setMoney(list.get(activeAccountIndex).getMoney() + depositMoney);
-                    System.out.println("-> Deposit succesfully! Your new current balance: $" + list.get(activeAccountIndex).getMoney());
+                    this.get(activeAccountIndex).setMoney(this.get(activeAccountIndex).getMoney() + depositMoney);
+                    System.out.println("-> Deposit succesfully! Your new current balance: $" + this.get(activeAccountIndex).getMoney());
                     break;
                 case 2:
                     System.out.println("-> Deposit cancelled!");
@@ -183,34 +182,34 @@ public class List extends ArrayList<Account> implements I_List {
         if (!permission) {
             System.out.println("-> Sorry! You are not allowed to access this function");
         } else {
-            System.out.println("-> Your current balance: $" + list.get(activeAccountIndex).getMoney());
+            System.out.println("-> Your current balance: $" + this.get(activeAccountIndex).getMoney());
             String accountId = Utils.getStringRegex("Enter receiver account ID: ", ID_FORMAT, "-> Invalid ID format, valid ID format is <ACC*** with * is a number>");
-            if (list.get(activeAccountIndex).getAccountId().equals(accountId)) {
+            if (this.get(activeAccountIndex).getAccountId().equals(accountId)) {
                 System.out.println("-> Sorry! You can not transfer money to your own account");
                 return;
             }
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getAccountId().equals(accountId)) {
+            for (int i = 0; i < this.size(); i++) {
+                if (this.get(i).getAccountId().equals(accountId)) {
                     isExist = true;
-                    System.out.println("-> Transfer money to " + list.get(i).getAccountName());
+                    System.out.println("-> Transfer money to " + this.get(i).getAccountName());
                     int transferMoney = Utils.getInt("Enter the money you want to transfer: $");
-                    if (list.get(activeAccountIndex).getMoney() < transferMoney) {
+                    if (this.get(activeAccountIndex).getMoney() < transferMoney) {
                         System.out.println("-> Sorry! You don't have enough money to transfer");
                     }else if(transferMoney <= 0) {
                         System.out.println("-> Transfer money must be greater than $0");
                     } else {
                         I_Menu menu = new Menu();
-                        menu.addItem("-> Are you sure you want to transfer $"+ transferMoney+" to " + list.get(i).getAccountName() +" ?");
+                        menu.addItem("-> Are you sure you want to transfer $"+ transferMoney+" to " + this.get(i).getAccountName() +" ?");
                         menu.addItem("1.Yes");
                         menu.addItem("2.No");
                         menu.showMenu();
                         int choice = Utils.getInt("Enter your choice <1 or 2>: ", 1, 2);
                         switch (choice) {
                             case 1:
-                                list.get(activeAccountIndex).setMoney(list.get(activeAccountIndex).getMoney() - transferMoney);
-                                list.get(i).setMoney(list.get(i).getMoney() + transferMoney);
-                                System.out.println("-> Transfer succesfully! Your new current balance: $" + list.get(activeAccountIndex).getMoney());
-                                System.out.println("-> " + list.get(i).getAccountName() + " new current balance: $" + list.get(i).getMoney());
+                                this.get(activeAccountIndex).setMoney(this.get(activeAccountIndex).getMoney() - transferMoney);
+                                this.get(i).setMoney(this.get(i).getMoney() + transferMoney);
+                                System.out.println("-> Transfer succesfully! Your new current balance: $" + this.get(activeAccountIndex).getMoney());
+                                System.out.println("-> " + this.get(i).getAccountName() + " new current balance: $" + this.get(i).getMoney());
                                 break;
                             case 2:
                                 System.out.println("-> Transfer cancelled!");
@@ -237,12 +236,12 @@ public class List extends ArrayList<Account> implements I_List {
             int choice = Utils.getInt("Enter your choice <1 or 2>: ", 1, 2);
             switch (choice) {
                 case 1:
-                    System.out.println("-> Delete " + list.get(activeAccountIndex).getAccountName() + " successfully!!");
-                    list.remove(activeAccountIndex);
+                    System.out.println("-> Delete " + this.get(activeAccountIndex).getAccountName() + " successfully!!");
+                    this.remove(activeAccountIndex);
                     setPermission(false);
                     break;
                 case 2:
-                    System.out.println("-> Delete " + list.get(activeAccountIndex).getAccountName() + " failed!");
+                    System.out.println("-> Delete " + this.get(activeAccountIndex).getAccountName() + " failed!");
                     break;
             }
         }
@@ -254,7 +253,7 @@ public class List extends ArrayList<Account> implements I_List {
             File f = new File(fileName);
             FileWriter fw = new FileWriter(f);
             PrintWriter pw = new PrintWriter(fw);
-            list.forEach((x) -> {
+            this.forEach((x) -> {
                 pw.println(x.getAccountId() + "-" + x.getAccountName() + "-" + encrypt(x.getPassword()));
             });
             pw.close();
@@ -270,7 +269,7 @@ public class List extends ArrayList<Account> implements I_List {
             File f = new File(fileName);
             FileWriter fw = new FileWriter(f);
             PrintWriter pw = new PrintWriter(fw);
-            list.forEach((x) -> {
+            this.forEach((x) -> {
                 pw.println(x.getMoney() + "-" + x.getAccountName() + "-" + x.getAccountId());
             });
             pw.close();
@@ -306,7 +305,7 @@ public class List extends ArrayList<Account> implements I_List {
                 String password = decrypt(stk.nextToken());
                 int money = Integer.parseInt(stk2.nextToken());
                 Account x = new Account(accountId, accountName, password, money);
-                list.add(x);
+                this.add(x);
             }
             bf.close();
             bf2.close();
@@ -344,7 +343,7 @@ public class List extends ArrayList<Account> implements I_List {
     @Override
     public void printCurrentUser() {
         if (permission) {
-            System.out.println("Current user: " + list.get(activeAccountIndex).getAccountName());
+            System.out.println("Current user: " + this.get(activeAccountIndex).getAccountName());
         }
     }
 }
