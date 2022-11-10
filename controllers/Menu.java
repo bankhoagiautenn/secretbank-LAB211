@@ -13,7 +13,7 @@ public class Menu extends ArrayList<String> implements I_Menu {
 
     @Override
     public void addItem(String content) {
-        thiw.add(content);
+        this.add(content);
     }
 
     @Override
