@@ -6,16 +6,14 @@ import dto.I_Menu;
 
 //@author SE173593
 public class Menu extends ArrayList<String> implements I_Menu {
-
-    private final ArrayList<String> menuList = new ArrayList<>();
-
+    
     public Menu() {
         super();
     }
 
     @Override
     public void addItem(String content) {
-        menuList.add(content);
+        thiw.add(content);
     }
 
     @Override
@@ -27,8 +25,8 @@ public class Menu extends ArrayList<String> implements I_Menu {
 
     @Override
     public void showMenu() {
-        for (int i = 0; i < menuList.size(); i++) {
-            System.out.println(menuList.get(i));
+        for (int i = 0; i < this.size(); i++) {
+            System.out.println(this.get(i));
         }
     }
 }
